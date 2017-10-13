@@ -3,7 +3,7 @@
 namespace App\Http\Api\Auth;
 
 use App\Http\Api\ApiController;
-use App\Http\Api\V1\Requests\Auth\ResetPasswordRequest;
+use App\Http\Requests\Auth\ResetPasswordRequest;
 use App\Models\User;
 use Tymon\JWTAuth\JWTAuth;
 use Illuminate\Support\Facades\Password;
@@ -16,6 +16,20 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 class ResetPasswordController extends ApiController
 {
     /**
+     * @var User
+     */
+    private $user;
+
+    /**
+     * ResetPasswordController constructor.
+     * @param User $user
+     */
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
+    /**
      * @param ResetPasswordRequest $request
      * @param JWTAuth $JWTAuth
      * @return mixed
@@ -27,13 +41,10 @@ class ResetPasswordController extends ApiController
                 $this->reset($user, $password);
             }
         );
-
         if($response !== Password::PASSWORD_RESET) {
             throw new HttpException(500);
         }
-
-        $user = User::where('email', '=', $request->get('email'))->first();
-
+        $user = $this->user->where('email', '=', $request->get('email'))->first();
         return $this->respondWithSuccess(['status' => 'ok', 'token' => $JWTAuth->fromUser($user)]);
     }
 

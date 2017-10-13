@@ -4,13 +4,12 @@ namespace App\Http\Api\V1\Controllers;
 
 use App\Http\Api\ApiController;
 
+use App\Http\Requests\PermissionCreateRequest;
+use App\Http\Requests\PermissionUpdateRequest;
 use App\Models\Permission;
 use App\Presenters\PermissionPresenter;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Validator\Contracts\ValidatorInterface;
-
-use App\Http\Api\V1\Requests\PermissionCreateRequest;
-use App\Http\Api\V1\Requests\PermissionUpdateRequest;
 use App\Interfaces\PermissionRepository;
 use App\Validators\PermissionValidator;
 

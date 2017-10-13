@@ -4,18 +4,17 @@ namespace App\Http\Api\V1\Controllers;
 
 use App\Http\Api\ApiController;
 
+use App\Http\Requests\UserCreateRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Models\Role;
 use App\Models\User;
 use App\Presenters\UserPresenter;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Hash;
 use Prettus\Validator\Contracts\ValidatorInterface;
-use App\Http\Api\V1\Requests\UserCreateRequest;
-use App\Http\Api\V1\Requests\UserUpdateRequest;
 use App\Interfaces\UserRepository;
 use App\Validators\UserValidator;
 use DB;
-use Tymon\JWTAuth\Facades\JWTAuth;
 
 
 /**

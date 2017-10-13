@@ -3,13 +3,10 @@
 namespace App\Http\Api\V1\Controllers;
 
 use App\Http\Api\ApiController;
-
-use App\Http\Api\V1\Requests\ChangeUserPasswordRequest;
-use App\Http\Api\V1\Requests\UserUpdateRequest;
-use App\Mail\PasswordChanged;
+use App\Http\Requests\ChangeUserPasswordRequest;
+use App\Http\Requests\UserUpdateRequest;
 use App\Presenters\UserPresenter;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Mail;
 use Prettus\Validator\Contracts\ValidatorInterface;
 use App\Interfaces\UserRepository;
 use App\Validators\UserValidator;
@@ -106,7 +103,6 @@ class UserSettingsController extends ApiController
             $current_password = $this->user->password;
 
             if (!Hash::check($request->old_password, $current_password)) {
-
                 return $this->respondUnprocessableEntity(['old_password' => 'Old password is incorrect']);
             }
 
@@ -117,15 +113,6 @@ class UserSettingsController extends ApiController
                 DB::rollBack();
                 return $this->respondWithError('Something went wrong, the password was not saved');
             }
-
-            Mail::to($request->user())->send(new PasswordChanged($this->user, $request));
-
-            if (count(Mail::failures()) > 0) {
-
-                DB::rollback();
-                return $this->respondWithError('Error in Mail');
-            }
-
             DB::commit();
             return $this->respondUpdated($this->repository->find($this->user->id));
         }catch (\Exception $error) {

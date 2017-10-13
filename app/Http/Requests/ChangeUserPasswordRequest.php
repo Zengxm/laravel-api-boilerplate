@@ -1,18 +1,16 @@
 <?php
 
-namespace App\Http\Api\V1\Requests\Auth;
+namespace App\Http\Requests;
 
 use Dingo\Api\Http\FormRequest;
 
 /**
- * Class ResetPasswordRequest
- * @package App\Http\Requests\Auth
+ * Class ChangeUserPasswordRequest
+ * @package App\Http\Requests
  */
-class ResetPasswordRequest extends FormRequest
+class ChangeUserPasswordRequest extends FormRequest
 {
     /**
-     * Determine if the user is authorized to make this request.
-     *
      * @return bool
      */
     public function authorize()
@@ -28,10 +26,9 @@ class ResetPasswordRequest extends FormRequest
     public function rules()
     {
         return [
-            'token' => 'required',
-            'email' => 'required|email',
+            'old_password' => 'required',
             'password' => 'required|confirmed|min:6',
-            'password_confirmation' => 'required'
+            'password_confirmation' => 'required|min:6',
         ];
     }
 }

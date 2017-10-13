@@ -4,17 +4,14 @@ namespace App\Http\Api\V1\Controllers;
 
 use App\Http\Api\ApiController;
 
+use App\Http\Requests\RoleCreateRequest;
+use App\Http\Requests\RoleUpdateRequest;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
 use App\Presenters\RolePresenter;
-
-
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Prettus\Validator\Contracts\ValidatorInterface;
-
-use App\Http\Api\V1\Requests\RoleCreateRequest;
-use App\Http\Api\V1\Requests\RoleUpdateRequest;
 use App\Interfaces\RoleRepository;
 use App\Validators\RoleValidator;
 

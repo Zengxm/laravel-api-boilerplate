@@ -3,7 +3,7 @@
 namespace App\Http\Api\Auth;
 
 use App\Http\Api\ApiController;
-use App\Http\Api\V1\Requests\Auth\ForgotPasswordRequest;
+use App\Http\Requests\Auth\ForgotPasswordRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Password;
 
@@ -13,13 +13,25 @@ use Illuminate\Support\Facades\Password;
  */
 class ForgotPasswordController extends ApiController
 {
+    private $user;
+
+    /**
+     * ForgotPasswordController constructor.
+     * @param User $user
+     */
+    public function __construct(User $user)
+    {
+        $this->user = $user;
+    }
+
+
     /**
      * @param ForgotPasswordRequest $request
      * @return mixed
      */
     public function sendResetEmail(ForgotPasswordRequest $request)
     {
-        $user = User::where('email', '=', $request->get('email'))->first();
+        $user = $this->user->where('email', '=', $request->get('email'))->first();
 
         if(!$user) {
             return $this->respondNotFound('Email has not been sent');

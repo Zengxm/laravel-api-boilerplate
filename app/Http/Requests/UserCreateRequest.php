@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Api\V1\Requests;
+namespace App\Http\Requests;
 
 use Dingo\Api\Http\FormRequest;
 
 /**
- * Class RoleCreateRequest
+ * Class UserCreateRequest
  * @package App\Http\Requests
  */
-class RoleCreateRequest extends FormRequest
+class UserCreateRequest extends FormRequest
 {
     /**
      * @return bool
@@ -26,7 +26,11 @@ class RoleCreateRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'password' => 'required|confirmed',
+            'password_confirmation' => 'required',
+            'email' => 'required|unique:users'
         ];
     }
 }

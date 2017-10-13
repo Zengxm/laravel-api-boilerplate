@@ -3,8 +3,7 @@
 namespace App\Http\Api\Auth;
 
 use App\Http\Api\ApiController;
-use App\Http\Api\V1\Requests\Auth\LoginRequest;
-use Illuminate\Support\Facades\Lang;
+use App\Http\Requests\Auth\LoginRequest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Tymon\JWTAuth\JWTAuth;
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -24,15 +23,11 @@ class LoginController extends ApiController
     public function login(LoginRequest $request, JWTAuth $JWTAuth)
     {
         $credentials = $request->only(['email', 'password']);
-        $device_id = $request->only('device_id');
-
         try {
-            $token = $JWTAuth->attempt($credentials, $device_id);
-
+            $token = $JWTAuth->attempt($credentials);
             if(!$token) {
                 throw new AccessDeniedHttpException();
             }
-
         } catch (JWTException $e) {
             throw new HttpException(500);
         }

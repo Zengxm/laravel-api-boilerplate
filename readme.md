@@ -1132,6 +1132,8 @@ To achieve this, we may build annotations that correlate to our API and generate
 
 Given the above annotations, when we run `php artisan l5-swagger:generate` we will get a JSON formatted file that will include the routes as swagger documentation.
 
+[![Code Sponsor](https://app.codesponsor.io/embed/uY4D6Bf4vdyvBxZtfdpah3Vk/devingray/laravel-api-boilerplate.svg)](https://app.codesponsor.io/link/uY4D6Bf4vdyvBxZtfdpah3Vk/devingray/laravel-api-boilerplate)
+
 
 
 
